@@ -1,7 +1,6 @@
 #pragma once
 #include "MyForm1.h"
 #include "MyForm2.h"
-
 namespace Projectlab2 {
 
 	using namespace System;
@@ -20,6 +19,7 @@ namespace Projectlab2 {
 		MyForm(void)
 		{
 			InitializeComponent();
+
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -43,6 +43,11 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ id;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Nickname;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ password;
+
 
 	private:
 		/// <summary>
@@ -63,6 +68,11 @@ namespace Projectlab2 {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Nickname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->password = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -122,11 +132,39 @@ namespace Projectlab2 {
 			this->label2->TabIndex = 3;
 			this->label2->Text = L"ѕароль";
 			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
+				this->id, this->Nickname,
+					this->password
+			});
+			this->dataGridView1->Location = System::Drawing::Point(248, 12);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(460, 274);
+			this->dataGridView1->TabIndex = 6;
+			// 
+			// id
+			// 
+			this->id->HeaderText = L"ID";
+			this->id->Name = L"id";
+			// 
+			// Nickname
+			// 
+			this->Nickname->HeaderText = L"Nickname";
+			this->Nickname->Name = L"Nickname";
+			// 
+			// password
+			// 
+			this->password->HeaderText = L"Password";
+			this->password->Name = L"password";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(217, 298);
+			this->ClientSize = System::Drawing::Size(720, 298);
+			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label2);
@@ -138,6 +176,7 @@ namespace Projectlab2 {
 			this->Name = L"MyForm";
 			this->Text = L"¬ход";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -160,11 +199,11 @@ namespace Projectlab2 {
 		f3->Owner = this;
 	}
 
-	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		textBox1->Text = "";
-		textBox2->Text = "";
+	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e);
+		
 
 
-	}
+	
+
 };
 }

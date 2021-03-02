@@ -266,7 +266,10 @@ namespace Projectlab2 {
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		Owner->Show();
 		this->Close();
+	
 	}
+		
+	
 
 	private: System::Void MyForm2_Load(System::Object^ sender, System::EventArgs^ e) {
 		textBox1->Text = "";
