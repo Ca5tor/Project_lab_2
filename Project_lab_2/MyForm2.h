@@ -1,7 +1,7 @@
 #pragma once
-
+#include "MyForm.h"
 namespace Projectlab2 {
-
+	using namespace System::Data::OleDb;
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -52,6 +52,12 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::TextBox^ textBox8;
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::TextBox^ textBox5;
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Nickname;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Password;
+
+
+
 
 	private:
 		/// <summary>
@@ -83,6 +89,10 @@ namespace Projectlab2 {
 			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->Nickname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Password = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -232,11 +242,34 @@ namespace Projectlab2 {
 			this->textBox5->Size = System::Drawing::Size(125, 20);
 			this->textBox5->TabIndex = 10;
 			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) {
+				this->Nickname,
+					this->Password
+			});
+			this->dataGridView1->Location = System::Drawing::Point(317, 33);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(343, 256);
+			this->dataGridView1->TabIndex = 17;
+			// 
+			// Nickname
+			// 
+			this->Nickname->HeaderText = L"nickname";
+			this->Nickname->Name = L"Nickname";
+			// 
+			// Password
+			// 
+			this->Password->HeaderText = L"password";
+			this->Password->Name = L"Password";
+			// 
 			// MyForm2
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(284, 382);
+			this->ClientSize = System::Drawing::Size(767, 382);
+			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->textBox8);
 			this->Controls->Add(this->label8);
 			this->Controls->Add(this->textBox7);
@@ -257,21 +290,44 @@ namespace Projectlab2 {
 			this->Name = L"MyForm2";
 			this->Text = L"Регистрация";
 			this->Load += gcnew System::EventHandler(this, &MyForm2::MyForm2_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
-#pragma endregion
 	
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+#pragma endregion
+		int j = 0;
+
+	public: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		Owner->Show();
+
+		String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
+		OleDbConnection^ dbConnection = gcnew OleDbConnection(connectionString);
+
+		// Запрос к БД
+		dbConnection->Open(); // Открыть соединение
+
+		//int sname = Convert::ToInt32( j );
+		String^ name = textBox1->Text;
+		String^ password = textBox2->Text;
+		
+		String^ query = "INSERT INTO [tab1] VALUES ('" + name + "', '" + password + "')";
+
+		OleDbCommand^ dbComand = gcnew OleDbCommand(query, dbConnection);//команда
+		dbComand->ExecuteNonQuery();
+		MessageBox::Show("Данные добавлены!", "Готово!");
+		j++;
+
+		dbConnection->Close();
+
 		this->Close();
 	
 	}
 		
 	
 
-	private: System::Void MyForm2_Load(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void MyForm2_Load(System::Object^ sender, System::EventArgs^ e); {
 		textBox1->Text = "";
 		textBox2->Text = "";
 		textBox3->Text = "";

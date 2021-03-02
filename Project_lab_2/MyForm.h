@@ -44,9 +44,11 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Nickname;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ password;
+
+
+
 
 
 	private:
@@ -69,7 +71,6 @@ namespace Projectlab2 {
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Nickname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->password = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
@@ -135,19 +136,14 @@ namespace Projectlab2 {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
-				this->id, this->Nickname,
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) {
+				this->Nickname,
 					this->password
 			});
 			this->dataGridView1->Location = System::Drawing::Point(248, 12);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->Size = System::Drawing::Size(460, 274);
 			this->dataGridView1->TabIndex = 6;
-			// 
-			// id
-			// 
-			this->id->HeaderText = L"ID";
-			this->id->Name = L"id";
 			// 
 			// Nickname
 			// 
@@ -183,7 +179,7 @@ namespace Projectlab2 {
 		}
 #pragma endregion
 
-	// Кнопка "Войти"
+	// Кнопка для перехода в форму "Войти"
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		MyForm1^ f2 = gcnew MyForm1();	// Создание нового экземпляра 
 		f2->Show();						// Открыть 2-ю форму 
@@ -191,7 +187,7 @@ namespace Projectlab2 {
 		f2->Owner = this;
 	}
 
-	// Кнопка "Регистрация"
+	// Кнопка для перехода в форму "Регистрация"
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		MyForm2^ f3 = gcnew MyForm2();	// Создание нового экземпляра 
 		f3->Show();						// Открыть 3-ю форму 
@@ -199,7 +195,7 @@ namespace Projectlab2 {
 		f3->Owner = this;
 	}
 
-	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e);
+	public: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e);
 		
 
 

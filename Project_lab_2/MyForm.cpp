@@ -19,8 +19,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	return 0;
 }
 
-
-
 System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::EventArgs^ e){
 	textBox1->Text = "";
 	textBox2->Text = "";
@@ -35,12 +33,9 @@ System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::Ev
 	OleDbCommand^ dbComand = gcnew OleDbCommand(query, dbConnection); // Команда
 	OleDbDataReader^ dbReader = dbComand->ExecuteReader(); // Считываем данные
 
-	if (dbReader->HasRows == false) MessageBox::Show("Error!", "Error 404");
-
-	else {
+	if (dbReader->HasRows == true) 
 		while (dbReader->Read()) {
-			dataGridView1->Rows->Add(dbReader["id"], dbReader["Nickname"], dbReader["Password"]);// , dbReader["Surname"], dbReader["Name"], dbReader["Patronymic"], dbReader["Date_of_birth"], dbReader["Place_of_birth"], dbReader["Phone_num"]);
-		}
+		dataGridView1->Rows->Add(dbReader["Nickname"], dbReader["Password"]);// , dbReader["Surname"], dbReader["Name"], dbReader["Patronymic"], dbReader["Date_of_birth"], dbReader["Place_of_birth"], dbReader["Phone_num"]);
 	}
 
 	// Закрыть соеденение
