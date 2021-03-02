@@ -46,6 +46,12 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Nickname;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ password;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Surname;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Name;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Patronymic;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ DateOfBirth;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ PlaceOfBirth;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Num;
 
 
 
@@ -73,6 +79,12 @@ namespace Projectlab2 {
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->Nickname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->password = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Surname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Patronymic = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->DateOfBirth = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->PlaceOfBirth = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Num = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -136,9 +148,9 @@ namespace Projectlab2 {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) {
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(8) {
 				this->Nickname,
-					this->password
+					this->password, this->Surname, this->Name, this->Patronymic, this->DateOfBirth, this->PlaceOfBirth, this->Num
 			});
 			this->dataGridView1->Location = System::Drawing::Point(248, 12);
 			this->dataGridView1->Name = L"dataGridView1";
@@ -155,11 +167,41 @@ namespace Projectlab2 {
 			this->password->HeaderText = L"Password";
 			this->password->Name = L"password";
 			// 
+			// Surname
+			// 
+			this->Surname->HeaderText = L"surname";
+			this->Surname->Name = L"Surname";
+			// 
+			// Name
+			// 
+			this->Name->HeaderText = L"name";
+			this->Name->Name = L"Name";
+			// 
+			// Patronymic
+			// 
+			this->Patronymic->HeaderText = L"patronymic ";
+			this->Patronymic->Name = L"Patronymic";
+			// 
+			// DateOfBirth
+			// 
+			this->DateOfBirth->HeaderText = L"dateofbirth";
+			this->DateOfBirth->Name = L"DateOfBirth";
+			// 
+			// PlaceOfBirth
+			// 
+			this->PlaceOfBirth->HeaderText = L"placeofbirth ";
+			this->PlaceOfBirth->Name = L"PlaceOfBirth";
+			// 
+			// Num
+			// 
+			this->Num->HeaderText = L"num";
+			this->Num->Name = L"Num";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(720, 298);
+			this->ClientSize = System::Drawing::Size(217, 298);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->textBox2);
@@ -169,7 +211,7 @@ namespace Projectlab2 {
 			this->Controls->Add(this->label1);
 			this->Font = (gcnew System::Drawing::Font(L"MS Reference Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Name = L"MyForm";
+		//	this->Name = L"MyForm";
 			this->Text = L"Вход";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
@@ -178,28 +220,16 @@ namespace Projectlab2 {
 
 		}
 #pragma endregion
+	// Прототипы процедур
 
 	// Кнопка для перехода в форму "Войти"
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		MyForm1^ f2 = gcnew MyForm1();	// Создание нового экземпляра 
-		f2->Show();						// Открыть 2-ю форму 
-		MyForm::Hide();					// Скрыть первую форму 
-		f2->Owner = this;
-	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e); 
 
 	// Кнопка для перехода в форму "Регистрация"
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		MyForm2^ f3 = gcnew MyForm2();	// Создание нового экземпляра 
-		f3->Show();						// Открыть 3-ю форму 
-		MyForm::Hide();					// Скрыть первую форму 
-		f3->Owner = this;
-	}
-
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e); 
+		
+	// Загрузка формы и открытие соединение с БД
 	public: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e);
 		
-
-
-	
-
 };
 }

@@ -54,7 +54,16 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::TextBox^ textBox5;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Nickname;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Password;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ password;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Surname;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Name;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Patronymic;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ DateOfBirth;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ PlaceOfBirth;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Num;
+
+
+
 
 
 
@@ -91,7 +100,13 @@ namespace Projectlab2 {
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->Nickname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Password = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->password = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Surname = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Patronymic = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->DateOfBirth = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->PlaceOfBirth = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Num = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -245,30 +260,60 @@ namespace Projectlab2 {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) {
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(8) {
 				this->Nickname,
-					this->Password
+					this->password, this->Surname, this->Name, this->Patronymic, this->DateOfBirth, this->PlaceOfBirth, this->Num
 			});
-			this->dataGridView1->Location = System::Drawing::Point(317, 33);
+			this->dataGridView1->Location = System::Drawing::Point(295, 33);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(343, 256);
+			this->dataGridView1->Size = System::Drawing::Size(460, 274);
 			this->dataGridView1->TabIndex = 17;
 			// 
 			// Nickname
 			// 
-			this->Nickname->HeaderText = L"nickname";
+			this->Nickname->HeaderText = L"Nickname";
 			this->Nickname->Name = L"Nickname";
 			// 
-			// Password
+			// password
 			// 
-			this->Password->HeaderText = L"password";
-			this->Password->Name = L"Password";
+			this->password->HeaderText = L"Password";
+			this->password->Name = L"password";
+			// 
+			// Surname
+			// 
+			this->Surname->HeaderText = L"surname";
+			this->Surname->Name = L"Surname";
+			// 
+			// Name
+			// 
+			this->Name->HeaderText = L"name";
+			this->Name->Name = L"Name";
+			// 
+			// Patronymic
+			// 
+			this->Patronymic->HeaderText = L"patronymic ";
+			this->Patronymic->Name = L"Patronymic";
+			// 
+			// DateOfBirth
+			// 
+			this->DateOfBirth->HeaderText = L"dateofbirth";
+			this->DateOfBirth->Name = L"DateOfBirth";
+			// 
+			// PlaceOfBirth
+			// 
+			this->PlaceOfBirth->HeaderText = L"placeofbirth ";
+			this->PlaceOfBirth->Name = L"PlaceOfBirth";
+			// 
+			// Num
+			// 
+			this->Num->HeaderText = L"num";
+			this->Num->Name = L"Num";
 			// 
 			// MyForm2
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(767, 382);
+			this->ClientSize = System::Drawing::Size(287, 382);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->textBox8);
 			this->Controls->Add(this->label8);
@@ -287,7 +332,7 @@ namespace Projectlab2 {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label1);
-			this->Name = L"MyForm2";
+		//	this->Name = L"MyForm2";
 			this->Text = L"Регистрация";
 			this->Load += gcnew System::EventHandler(this, &MyForm2::MyForm2_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
@@ -297,45 +342,12 @@ namespace Projectlab2 {
 		}
 	
 #pragma endregion
-		int j = 0;
+	// Прототипы процедур
 
-	public: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		Owner->Show();
+	// Ввод и сохранение в БД данных
+	public: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e);
 
-		String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
-		OleDbConnection^ dbConnection = gcnew OleDbConnection(connectionString);
-
-		// Запрос к БД
-		dbConnection->Open(); // Открыть соединение
-
-		//int sname = Convert::ToInt32( j );
-		String^ name = textBox1->Text;
-		String^ password = textBox2->Text;
-		
-		String^ query = "INSERT INTO [tab1] VALUES ('" + name + "', '" + password + "')";
-
-		OleDbCommand^ dbComand = gcnew OleDbCommand(query, dbConnection);//команда
-		dbComand->ExecuteNonQuery();
-		MessageBox::Show("Данные добавлены!", "Готово!");
-		j++;
-
-		dbConnection->Close();
-
-		this->Close();
-	
-	}
-		
-	
-
-	private: System::Void MyForm2_Load(System::Object^ sender, System::EventArgs^ e); {
-		textBox1->Text = "";
-		textBox2->Text = "";
-		textBox3->Text = "";
-		textBox4->Text = "";
-		textBox5->Text = "";
-		textBox6->Text = "";
-		textBox7->Text = "";
-		textBox8->Text = "";
-	}
+	// Загузка формы
+	private: System::Void MyForm2_Load(System::Object^ sender, System::EventArgs^ e); 
 };
 }

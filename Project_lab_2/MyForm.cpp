@@ -1,12 +1,10 @@
 #include "MyForm.h"
-#include "Header.h"
 #include <Windows.h>
-
 
 using namespace System;
 using namespace System::Windows::Forms;
 using namespace System::IO;
-using namespace System::Data::OleDb;
+using namespace System::Data::OleDb; // нужен дл€ работы с Ѕƒ
 using namespace Projectlab2; // name project
 
 
@@ -45,3 +43,18 @@ System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::Ev
 	return System::Void();
 }
 
+System::Void Projectlab2::MyForm::button2_Click(System::Object^ sender, System::EventArgs^ e){
+	MyForm2^ f3 = gcnew MyForm2();	// —оздание нового экземпл€ра 
+	f3->Show();						// ќткрыть 3-ю форму 
+	MyForm::Hide();					// —крыть первую форму 
+	f3->Owner = this;
+	return System::Void();
+}
+
+System::Void Projectlab2::MyForm::button1_Click(System::Object^ sender, System::EventArgs^ e){
+	MyForm1^ f2 = gcnew MyForm1();	// —оздание нового экземпл€ра 
+	f2->Show();						// ќткрыть 2-ю форму 
+	MyForm::Hide();					// —крыть первую форму 
+	f2->Owner = this;
+	return System::Void();
+}
