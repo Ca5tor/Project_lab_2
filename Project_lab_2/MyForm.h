@@ -3,9 +3,6 @@
 #include "MyForm2.h"
 namespace Projectlab2 {
 
-	
-	
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -13,9 +10,7 @@ namespace Projectlab2 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Threading;
-	
 	using namespace System::Collections::Generic;
-	using namespace System::ComponentModel;
 	using namespace System::Text;
 
 	/// <summary>
@@ -23,8 +18,6 @@ namespace Projectlab2 {
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form{
 
-		
-		
 	public:
 		MyForm(void)
 		{
@@ -239,19 +232,13 @@ namespace Projectlab2 {
 
 		}
 
-		
-
-			
-			
-
-		
-
 #pragma endregion
 		
 		// Подкл. к БД
 		String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
 		OleDbConnection^ dbConnection;
 	
+		// Бегаем по БД в поисках юзера
 		bool IsUserExists(String^ name, String^ password) {
 			OleDbConnection^ dbConnection = gcnew OleDbConnection(connectionString);
 			dbConnection->Open();
@@ -277,16 +264,13 @@ namespace Projectlab2 {
 	// Загрузка формы и открытие соединение с БД
 	public: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e);
 		
-private: System::Void MyForm_Activated(System::Object^ sender, System::EventArgs^ e) {
-	textBox1->Text = "";
-	textBox2->Text = "";
-}
+	private: System::Void MyForm_Activated(System::Object^ sender, System::EventArgs^ e) {
+		textBox1->Text = "";
+		textBox2->Text = "";
+	}
 
-private: System::Void bindingSource1_CurrentChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-
-private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
-	dbConnection->Close(); // закрыть соединение с БД
-}
+	private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
+		dbConnection->Close(); // закрыть соединение с БД
+	}
 };
 }

@@ -8,6 +8,8 @@ namespace Projectlab2 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::IO;
+	using namespace System::Data::OleDb; // нужен для работы с БД
 
 	/// <summary>
 	/// Сводка для MyForm1
@@ -15,13 +17,19 @@ namespace Projectlab2 {
 	public ref class MyForm1 : public System::Windows::Forms::Form
 	{
 	public:
-		MyForm1(void)
+		// принимаем в конструктор данные с 1й формы
+		MyForm1(String^ name, String^ password) 
 		{
 			InitializeComponent();
 			//
 			//TODO: добавьте код конструктора
 			//
+			this->name = name;
+			this->password = password;
 		}
+		// передаваемые значения с прошлой формы 
+		String^ name; 
+		String^ password;
 
 	protected:
 		/// <summary>
@@ -149,15 +157,57 @@ namespace Projectlab2 {
 #pragma endregion
 
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		Owner->Show();
-		this->Close();
+		String^ rand_num = "Abc"; // псевдо случайная величина
+		password += rand_num; // полученный с прошлой формы пароль при авторизации
+		String^ old_password = textBox1->Text->ToString();
+		 old_password += rand_num; // ввод старого пароля в форме изменения пароля + "случ." величина 
+
+		if (old_password == password) { // Если старые пароли совпадают
+			// Если пароли состоят из 5 символов
+			if (textBox1->Text->Length == 5 && textBox2->Text->Length == 5 && textBox3->Text->Length == 5) {
+				if (textBox2->Text == textBox3->Text) { // если новые пароли совпадают
+					// Подкл. к БД
+					String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
+					OleDbConnection^ dbConnection;
+
+					dbConnection = gcnew OleDbConnection(connectionString);
+					dbConnection->Open(); // Открыть соединение
+					// Меняеи старый пароль юзеру 
+					String^ query = "UPDATE [tab1] SET [Password] = '" + textBox2->Text + "' WHERE [Nickname] = '" + name + "'";
+					OleDbCommand^ dbComand = gcnew OleDbCommand(query, dbConnection); // Команда
+					OleDbDataReader^ dbReader = dbComand->ExecuteReader(); // Считываем данные
+					// Закрыть соеденение
+					dbReader->Close();
+					dbConnection->Close(); // закрыть соединение с БД
+					MessageBox::Show("Пароль изменён");
+
+					Owner->Show(); this->Close();
+					
+				}
+				else {
+					MessageBox::Show("Новые пароли не совпадают");
+					textBox1->Clear(); textBox2->Clear(); textBox3->Clear();
+					textBox2->Focus();
+					return;
+				}
+			}
+			else {
+				MessageBox::Show("Пароль должен состоять из 5 символов");
+				textBox1->Clear(); textBox2->Clear(); textBox3->Clear();
+				textBox1->Focus();
+				return;
+			}
+		}
+		else {
+			MessageBox::Show("Пароли не совпадают");
+			textBox1->Clear(); textBox2->Clear(); textBox3->Clear();
+			textBox1->Focus();
+			return;
+		}
 	}
 
 	private: System::Void MyForm1_Load(System::Object^ sender, System::EventArgs^ e) {
-		textBox1->Text = "";
-		textBox2->Text = "";
-		textBox3->Text = "";
+		textBox1->Text = ""; textBox2->Text = ""; textBox3->Text = "";	
 	}
 };
 }

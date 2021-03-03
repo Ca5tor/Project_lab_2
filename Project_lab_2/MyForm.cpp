@@ -7,7 +7,6 @@ using namespace System::IO;
 using namespace System::Data::OleDb; // нужен для работы с БД
 using namespace Projectlab2; // name project
 
-
 [STAThread]
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Application::EnableVisualStyles();
@@ -59,24 +58,19 @@ System::Void Projectlab2::MyForm::button1_Click(System::Object^ sender, System::
 		textBox2->Focus();
 		return;
 	}
-	//String^ name = textBox1->Text;
-	//String^ password = textBox2->Text;
 
 	if (MyForm::IsUserExists(textBox1->Text, textBox2->Text)) {
-		MyForm1^ f2 = gcnew MyForm1();	// Создание нового экземпляра 
-		f2->Show();						// Открыть 2-ю форму 
-		MyForm::Hide();					// Скрыть первую форму 
-		f2->Owner = this;
-		
-		
 
+		MyForm1^ f2 = gcnew MyForm1(this->textBox1->Text, this->textBox2->Text);	// Создание нового экземпляра и передача имени юзера
+		f2->Show();											// Открыть 2-ю форму 
+		MyForm::Hide();										// Скрыть первую форму 
+		f2->Owner = this;
 	}
 	else {
 		textBox1->Clear();
 		textBox2->Clear();
-		MessageBox::Show("Wrong Username or Login!", "Login Error");
+		MessageBox::Show("Неправильный пароль или имя пользователя", "Login Error");
 	}
-
 	
 	return System::Void();
 }

@@ -63,12 +63,6 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ PlaceOfBirth;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Num;
 
-
-
-
-
-
-
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
