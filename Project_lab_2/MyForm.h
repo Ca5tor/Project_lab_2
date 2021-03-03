@@ -23,6 +23,7 @@ namespace Projectlab2 {
 			//
 			//TODO: добавьте код конструктора
 			//
+			
 		}
 
 	protected:
@@ -52,10 +53,6 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ DateOfBirth;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ PlaceOfBirth;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Num;
-
-
-
-
 
 	private:
 		/// <summary>
@@ -211,8 +208,9 @@ namespace Projectlab2 {
 			this->Controls->Add(this->label1);
 			this->Font = (gcnew System::Drawing::Font(L"MS Reference Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-		//	this->Name = L"MyForm";
+			//this->Name = L"MyForm";
 			this->Text = L"Вход";
+			this->Activated += gcnew System::EventHandler(this, &MyForm::MyForm_Activated);
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
@@ -231,5 +229,11 @@ namespace Projectlab2 {
 	// Загрузка формы и открытие соединение с БД
 	public: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e);
 		
+private: System::Void MyForm_Activated(System::Object^ sender, System::EventArgs^ e) {
+	textBox1->Text = "";
+	textBox2->Text = "";
+
+	
+}
 };
 }

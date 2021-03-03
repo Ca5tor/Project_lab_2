@@ -18,8 +18,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 }
 
 System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::EventArgs^ e){
-	textBox1->Text = "";
-	textBox2->Text = "";
 
 	// Подкл. к БД
 	String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
@@ -31,11 +29,11 @@ System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::Ev
 	OleDbCommand^ dbComand = gcnew OleDbCommand(query, dbConnection); // Команда
 	OleDbDataReader^ dbReader = dbComand->ExecuteReader(); // Считываем данные
 
-	if (dbReader->HasRows == true) 
-		while (dbReader->Read()) {
-		dataGridView1->Rows->Add(dbReader["Nickname"], dbReader["Password"]);// , dbReader["Surname"], dbReader["Name"], dbReader["Patronymic"], dbReader["Date_of_birth"], dbReader["Place_of_birth"], dbReader["Phone_num"]);
+	if (dbReader->HasRows == true) // Проверка наличия данных 
+		while (dbReader->Read()) { // Заполение скрытой таб.данных в форме
+		dataGridView1->Rows->Add(dbReader["Nickname"], dbReader["Password"]);
 	}
-
+	
 	// Закрыть соеденение
 	dbReader->Close();
 	dbConnection->Close();
