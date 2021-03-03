@@ -18,6 +18,7 @@ namespace Projectlab2 {
 		MyForm2(void)
 		{
 			InitializeComponent();
+
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -343,6 +344,20 @@ namespace Projectlab2 {
 	
 #pragma endregion
 	// Прототипы процедур
+
+		// функция проверки что длина пароль составляет 5 символов
+		bool GetPassword(TextBox^ Tx, String^ s, String^ x) {
+			// проверка на пустое поле
+			if (Tx->Text->Length != 5) {
+				MessageBox::Show(s, "Error!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				Tx->Focus();
+				return false;
+			}
+
+			x = Convert::ToString(Tx->Text);
+
+			return true;
+		}
 
 	// Ввод и сохранение в БД данных
 	public: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e);

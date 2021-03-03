@@ -1,5 +1,7 @@
 #include "Header.h"
 
+
+
 System::Void Projectlab2::MyForm2::button1_Click(System::Object^ sender, System::EventArgs^ e){
 	Owner->Show();
 
@@ -14,6 +16,18 @@ System::Void Projectlab2::MyForm2::button1_Click(System::Object^ sender, System:
 	int date = Convert::ToInt32(textBox6->Text);	// Дата рождения
 	String^ place = textBox7->Text;					// Место рождения
 	int num = Convert::ToInt32(textBox8->Text);		// Номер телефона
+
+	if (pass->Length != 5) {						// проверяем количество символов пароля
+		MessageBox::Show("Пароль должен состоять из 5 символов", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		textBox2->Focus();
+		return;
+	}
+
+	if (nick_n->Length == 0) {						// проверяем на пусто поле
+		MessageBox::Show("Вы забыли вести имя пользователя", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		textBox1->Focus();
+		return;
+	}
 
 	// Запрос к БД
 	dbConnection->Open(); // Открыть соединение

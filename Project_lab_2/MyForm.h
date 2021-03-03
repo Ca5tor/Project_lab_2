@@ -3,23 +3,33 @@
 #include "MyForm2.h"
 namespace Projectlab2 {
 
+	
+	
+
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Threading;
+	
+	using namespace System::Collections::Generic;
+	using namespace System::ComponentModel;
+	using namespace System::Text;
 
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>
-	public ref class MyForm : public System::Windows::Forms::Form
-	{
+	public ref class MyForm : public System::Windows::Forms::Form{
+
+		
+		
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
-
+			
 			//
 			//TODO: добавьте код конструктора
 			//
@@ -53,12 +63,17 @@ namespace Projectlab2 {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ DateOfBirth;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ PlaceOfBirth;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ Num;
+	private: System::ComponentModel::BackgroundWorker^ backgroundWorker1;
+	private: System::Windows::Forms::BindingSource^ bindingSource1;
+
+	private: System::ComponentModel::IContainer^ components;
+
 
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -67,6 +82,7 @@ namespace Projectlab2 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -82,7 +98,10 @@ namespace Projectlab2 {
 			this->DateOfBirth = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->PlaceOfBirth = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->Num = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->bindingSource1 = (gcnew System::Windows::Forms::BindingSource(this->components));
+			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->bindingSource1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -149,9 +168,9 @@ namespace Projectlab2 {
 				this->Nickname,
 					this->password, this->Surname, this->Name, this->Patronymic, this->DateOfBirth, this->PlaceOfBirth, this->Num
 			});
-			this->dataGridView1->Location = System::Drawing::Point(248, 12);
+			this->dataGridView1->Location = System::Drawing::Point(265, 12);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(460, 274);
+			this->dataGridView1->Size = System::Drawing::Size(460, 105);
 			this->dataGridView1->TabIndex = 6;
 			// 
 			// Nickname
@@ -198,26 +217,55 @@ namespace Projectlab2 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(217, 298);
-			this->Controls->Add(this->dataGridView1);
+			this->ClientSize = System::Drawing::Size(220, 298);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label1);
+			this->Controls->Add(this->dataGridView1);
 			this->Font = (gcnew System::Drawing::Font(L"MS Reference Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			//this->Name = L"MyForm";
+		//	this->Name = L"MyForm";
 			this->Text = L"Вход";
 			this->Activated += gcnew System::EventHandler(this, &MyForm::MyForm_Activated);
+			this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &MyForm::MyForm_FormClosed);
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->bindingSource1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
+
+		
+
+			
+			
+
+		
+
 #pragma endregion
+		
+		// Подкл. к БД
+		String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
+		OleDbConnection^ dbConnection;
+	
+		bool IsUserExists(String^ name, String^ password) {
+			OleDbConnection^ dbConnection = gcnew OleDbConnection(connectionString);
+			dbConnection->Open();
+
+			String^ selectCmd = ("SELECT * FROM [tab1] WHERE Nickname= '"+ name +"' AND Password= '"+ password + "' ");
+			OleDbCommand^ cmd = gcnew OleDbCommand(selectCmd, dbConnection);
+			OleDbDataReader^ reader = cmd->ExecuteReader();
+			
+			return reader->HasRows;
+
+			reader->Close();
+			dbConnection->Close();
+		}
+
 	// Прототипы процедур
 
 	// Кнопка для перехода в форму "Войти"
@@ -232,8 +280,13 @@ namespace Projectlab2 {
 private: System::Void MyForm_Activated(System::Object^ sender, System::EventArgs^ e) {
 	textBox1->Text = "";
 	textBox2->Text = "";
+}
 
-	
+private: System::Void bindingSource1_CurrentChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+
+private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
+	dbConnection->Close(); // закрыть соединение с БД
 }
 };
 }

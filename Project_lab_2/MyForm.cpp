@@ -19,12 +19,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::EventArgs^ e){
 
-	// Подкл. к БД
-	String^ connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source= Database.mdb";
-	OleDbConnection^ dbConnection = gcnew OleDbConnection(connectionString);
+	dbConnection = gcnew OleDbConnection(connectionString);
+	dbConnection->Open(); // Открыть соединение
 
 	// Запрос к БД
-	dbConnection->Open(); // Открыть соединение
 	String^ query = "SELECT * FROM [tab1]"; // Запрос
 	OleDbCommand^ dbComand = gcnew OleDbCommand(query, dbConnection); // Команда
 	OleDbDataReader^ dbReader = dbComand->ExecuteReader(); // Считываем данные
@@ -36,7 +34,7 @@ System::Void Projectlab2::MyForm::MyForm_Load(System::Object^ sender, System::Ev
 	
 	// Закрыть соеденение
 	dbReader->Close();
-	dbConnection->Close();
+	dbConnection->Close(); // закрыть соединение с БД
 
 	return System::Void();
 }
@@ -50,9 +48,37 @@ System::Void Projectlab2::MyForm::button2_Click(System::Object^ sender, System::
 }
 
 System::Void Projectlab2::MyForm::button1_Click(System::Object^ sender, System::EventArgs^ e){
-	MyForm1^ f2 = gcnew MyForm1();	// Создание нового экземпляра 
-	f2->Show();						// Открыть 2-ю форму 
-	MyForm::Hide();					// Скрыть первую форму 
-	f2->Owner = this;
+
+	if (textBox1->Text->Length == 0) {
+		MessageBox::Show("Вы забыли вести имя пользователя", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		textBox1->Focus();
+		return;
+	}
+	if (textBox2->Text->Length == 0 || textBox2->Text->Length != 5) {
+		MessageBox::Show("Вы забыли вести пароль или пароль не равен 5 символам", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		textBox2->Focus();
+		return;
+	}
+	//String^ name = textBox1->Text;
+	//String^ password = textBox2->Text;
+
+	if (MyForm::IsUserExists(textBox1->Text, textBox2->Text)) {
+		MyForm1^ f2 = gcnew MyForm1();	// Создание нового экземпляра 
+		f2->Show();						// Открыть 2-ю форму 
+		MyForm::Hide();					// Скрыть первую форму 
+		f2->Owner = this;
+		
+		
+
+	}
+	else {
+		textBox1->Clear();
+		textBox2->Clear();
+		MessageBox::Show("Wrong Username or Login!", "Login Error");
+	}
+
+	
 	return System::Void();
 }
+
+
